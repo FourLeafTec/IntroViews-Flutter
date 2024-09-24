@@ -10,9 +10,11 @@ class PagerIndicator extends StatelessWidget {
   const PagerIndicator({
     Key? key,
     required this.viewModel,
+    this.bubbleWidth = BUBBLE_WIDTH,
   }) : super(key: key);
 
   final PagerIndicatorViewModel viewModel;
+  final double bubbleWidth;
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +23,9 @@ class PagerIndicator extends StatelessWidget {
     final numOfPages = viewModel.pages.length;
 
     // calculates the width of the bubble to avoid the overflowing render issue #96
-    final bubbleWidth = BUBBLE_WIDTH * numOfPages > context.screenWidth
+    final _bubbleWidth = bubbleWidth * numOfPages > context.screenWidth
         ? (context.screenWidth / numOfPages)
-        : BUBBLE_WIDTH;
+        : bubbleWidth;
 
     for (var i = 0; i < numOfPages; i++) {
       final page = viewModel.pages[i];
@@ -49,7 +51,7 @@ class PagerIndicator extends StatelessWidget {
 
       // adding to the list
       bubbles.add(PageBubble(
-        width: bubbleWidth,
+        width: _bubbleWidth,
         viewModel: PageBubbleViewModel(
           iconAssetPath: page.iconImageAssetPath,
           iconColor: page.iconColor,
@@ -63,13 +65,13 @@ class PagerIndicator extends StatelessWidget {
 
     // calculating the translation value of pager indicator while sliding
     final baseTranslation =
-        ((viewModel.pages.length * BUBBLE_WIDTH) / 2) - (BUBBLE_WIDTH / 2);
-    var translation = baseTranslation - (viewModel.activeIndex * BUBBLE_WIDTH);
+        ((viewModel.pages.length * bubbleWidth) / 2) - (bubbleWidth / 2);
+    var translation = baseTranslation - (viewModel.activeIndex * bubbleWidth);
 
     if (viewModel.slideDirection == SlideDirection.leftToRight) {
-      translation += BUBBLE_WIDTH * viewModel.slidePercent;
+      translation += bubbleWidth * viewModel.slidePercent;
     } else if (viewModel.slideDirection == SlideDirection.rightToLeft) {
-      translation -= BUBBLE_WIDTH * viewModel.slidePercent;
+      translation -= bubbleWidth * viewModel.slidePercent;
     }
     // UI
     return Column(

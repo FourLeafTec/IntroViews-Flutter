@@ -38,6 +38,7 @@ class IntroViewsFlutter extends StatefulWidget {
     this.columnMainAxisAlignment = MainAxisAlignment.spaceAround,
     this.fullTransition = FULL_TRANSITION_PX,
     this.background,
+    this.bubbleWidth = BUBBLE_WIDTH,
   })  : assert(
           pages.length > 0,
           "At least one 'PageViewModel' item of 'pages' argument is required.",
@@ -130,6 +131,9 @@ class IntroViewsFlutter extends StatefulWidget {
   /// Sets the background color to Colors.transparent if you have your own
   /// background image below.
   final Color? background;
+
+  /// Width of the bubble.
+  final double bubbleWidth;
 
   @override
   _IntroViewsFlutterState createState() => _IntroViewsFlutterState();
@@ -277,6 +281,7 @@ class _IntroViewsFlutterState extends State<IntroViewsFlutter>
               slideDirection,
               slidePercent,
             ),
+            bubbleWidth: widget.bubbleWidth,
           ),
           PageIndicatorButtons(
             // skip and Done buttons
